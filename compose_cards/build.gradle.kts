@@ -40,11 +40,10 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
+    implementation ("androidx.compose.ui:ui-graphics")
+    implementation ("androidx.compose.foundation:foundation:1.6.0-alpha05")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 }
