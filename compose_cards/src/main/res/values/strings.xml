@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="your_card_number">Card Number</string>
+    <string name="save">Save</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="cvv">CVV</string>
+</resources>
