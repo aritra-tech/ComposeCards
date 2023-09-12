@@ -7,6 +7,11 @@
  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
 
+<p align="center">
+<img src="assets/Untitled.gif" width="280"/>
+</p>
+
+
  ## What's included?📜
 - 🗂️Automatic card type recognition that supports the following cards:
   - Visa
