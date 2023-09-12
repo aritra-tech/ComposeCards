@@ -3,6 +3,8 @@
 💳 ComposeCards is a beautifully designed payment view library for Credit and Debit Cards. Made using Jetpack Compose 🎉
 </p>
 
+<br>
+
 <p align="center">
 <img src="assets/Untitled.gif" width="280"/>
 </p>
