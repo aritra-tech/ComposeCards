@@ -3,7 +3,7 @@ import com.android.build.gradle.internal.utils.createPublishingInfoForLibrary
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    `maven-publish`
+    id ("maven-publish")
 }
 
 android {
@@ -63,8 +63,8 @@ publishing {
     publications {
         register<MavenPublication>("release") {
             groupId = "com.github.aritra-tech"
-            artifactId = "compose-cards"
-            version = "1.0.2"
+            artifactId = "ComposeCards"
+            version = "1.0.3"
 
             afterEvaluate {
                 from(components["release"])
