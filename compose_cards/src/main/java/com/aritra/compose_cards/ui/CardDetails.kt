@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aritra.compose_cards.R
 import com.aritra.compose_cards.component.InputTextField
@@ -30,7 +34,14 @@ fun CardDetails() {
     var expiryDate by remember { mutableStateOf(TextFieldValue()) }
     var cardCVV by remember { mutableStateOf(TextFieldValue()) }
 
-    Column (modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        CreditCard(
+            cardNumber = cardNumber,
+            holderName = cardHolderName,
+            expiryDate = expiryDate,
+            cardCVV = cardCVV
+        )
 
         LazyColumn(
             modifier = Modifier
@@ -41,7 +52,11 @@ fun CardDetails() {
                 InputTextField(
                     textFieldValue = cardNumber,
                     label = stringResource(R.string.your_card_number),
-                    onTextChanged = { cardNumber = it}
+                    keyboardType = KeyboardType.Number,
+                    onTextChanged = { cardNumber = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp)
                 )
             }
 
@@ -49,7 +64,10 @@ fun CardDetails() {
                 InputTextField(
                     textFieldValue = cardHolderName,
                     label = "Card Holder Name",
-                    onTextChanged = { cardHolderName = it }
+                    onTextChanged = { cardHolderName = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp),
                 )
             }
 
@@ -57,7 +75,7 @@ fun CardDetails() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 4.dp),
+                        .padding(vertical = 5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     InputTextField(
@@ -86,7 +104,9 @@ fun CardDetails() {
                     onClick = { },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = 20.dp),
+                    shape = RoundedCornerShape(15.dp),
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colors.onBackground)
                 ) {
                     Text(
                         text = stringResource(id = R.string.save),
@@ -99,3 +119,10 @@ fun CardDetails() {
     }
 }
 
+@Preview(showBackground = true, backgroundColor = 0xFFFFFEFE,
+    device = "id:pixel_6_pro"
+)
+@Composable
+fun Card() {
+    CardDetails()
+}
