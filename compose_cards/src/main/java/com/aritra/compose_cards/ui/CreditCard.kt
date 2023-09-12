@@ -103,7 +103,8 @@ fun CreditCard(
                 .graphicsLayer(
                     rotationY = animateFloatAsState(if (backSwitch) 180f else 0f).value,
                     translationY = 0f
-                ).clickable {
+                )
+                .clickable {
                     backSwitch = !backSwitch
                 },
             shape = RoundedCornerShape(20.dp),
@@ -135,11 +136,11 @@ fun CreditCard(
 
                         Text(
                             text = maskedNumber.chunked(4).joinToString(" "),
+                            style = MaterialTheme.typography.h6,
                             maxLines = 1,
                             color = Color.White,
                             modifier = Modifier
                                 .animateContentSize(spring())
-                                .padding(vertical = 16.dp, horizontal = 16.dp)
                                 .constrainAs(number) {
                                     linkTo(
                                         start = parent.start,
@@ -168,7 +169,7 @@ fun CreditCard(
                             color = Color.White,
                             modifier = Modifier
                                 .animateContentSize(TweenSpec(300))
-                                .padding(start = 16.dp, bottom = 16.dp)
+                                .padding(top = 10.dp, start = 16.dp, bottom = 16.dp)
                                 .constrainAs(cardName) {
                                     start.linkTo(parent.start)
                                     bottom.linkTo(parent.bottom)
@@ -190,7 +191,7 @@ fun CreditCard(
                             text = expiryDate.text.take(4).chunked(2).joinToString(" / "),
                             color = Color.White,
                             modifier = Modifier
-                                .padding(end = 16.dp, bottom = 16.dp)
+                                .padding(top = 10.dp, end = 16.dp, bottom = 16.dp)
                                 .constrainAs(cardExpiry) {
                                     end.linkTo(parent.end)
                                     bottom.linkTo(parent.bottom)
@@ -224,6 +225,7 @@ fun CreditCard(
             visible = backSwitch,
             modifier = Modifier
                 .padding(end = 50.dp, bottom = 50.dp)
+                .align(Alignment.BottomEnd)
         ) {
             Box(
                 modifier = Modifier

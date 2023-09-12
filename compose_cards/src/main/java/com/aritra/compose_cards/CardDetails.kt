@@ -1,4 +1,4 @@
-package com.aritra.compose_cards.ui
+package com.aritra.compose_cards
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -24,9 +23,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.aritra.compose_cards.R
 import com.aritra.compose_cards.component.CardNumberFilter
 import com.aritra.compose_cards.component.InputTextField
+import com.aritra.compose_cards.ui.CreditCard
 
 @Composable
 fun CardDetails() {
