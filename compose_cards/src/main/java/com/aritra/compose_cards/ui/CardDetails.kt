@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aritra.compose_cards.R
+import com.aritra.compose_cards.component.CardNumberFilter
 import com.aritra.compose_cards.component.InputTextField
 
 @Composable
@@ -56,7 +57,8 @@ fun CardDetails() {
                     onTextChanged = { cardNumber = it },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 5.dp)
+                        .padding(vertical = 5.dp),
+                    visualTransformation = CardNumberFilter
                 )
             }
 
