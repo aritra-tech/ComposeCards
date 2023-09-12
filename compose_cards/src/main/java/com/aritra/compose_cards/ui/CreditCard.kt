@@ -83,11 +83,11 @@ fun CreditCard(
         if (cardType == Card.Visa) {
             Color(0xFF1C478B)
         } else if (cardType == Card.Mastercard) {
-            Color(0xFF1C478B)
+            Color(0xFF3BB9A1)
         } else if (cardType == Card.RuPay) {
-            Color(0xFF1C478B)
+            Color(0xFFB2B1FD)
         } else if (cardType == Card.AmericanExpress) {
-            Color(0xFF1C478B)
+            Color(0xFFA671FC)
         } else {
             MaterialTheme.colors.onBackground
         },
