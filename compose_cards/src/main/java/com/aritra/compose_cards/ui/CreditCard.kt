@@ -239,7 +239,7 @@ fun CreditCard(
                     style = MaterialTheme.typography.h6,
                     color = Color.White,
                     modifier = Modifier
-                        .animateContentSize()
+                        .animateContentSize(TweenSpec(300))
                         .padding(vertical = 4.dp, horizontal = 16.dp)
 
                 )
