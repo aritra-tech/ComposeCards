@@ -38,6 +38,16 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.aritra.compose_cards.R
 
+/**
+ * Composable function to display a Credit Card view with animated flip functionality.
+ *
+ * @param cardNumber The text input for the credit card number.
+ * @param holderName The text input for the cardholder's name.
+ * @param expiryDate The text input for the card's expiry date.
+ * @param cardCVV The text input for the card's CVV (Card Verification Value) number.
+ */
+
+
 @Composable
 fun CreditCard(
     cardNumber: TextFieldValue,
@@ -46,14 +56,21 @@ fun CreditCard(
     cardCVV: TextFieldValue
 ) {
 
+    // Mutable state to track the flip state of the card
     var backSwitch by remember { mutableStateOf(false) }
+
+    // Mutable state to track the detected card type (Visa, Mastercard, etc.)
     var cardType by remember { mutableStateOf(Card.None) }
+
+    // Calculate the length of the card number and mask it for display
     val length = if (cardNumber.text.length > 16) 16 else cardNumber.text.length
     val maskedNumber = remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
+
+
     val cvv = if (cardCVV.text.length > 3) 3 else cardCVV.text.length
     val maskedCVV = remember { "*".repeat(3) }.replaceRange(0 until cvv, cardCVV.text.take(3))
 
-    // Switch to back side of the card depending on the cvv number
+    // Determine whether to switch to the back side of the card based on CVV length
     if (cardCVV.text.length == 1 && !backSwitch) {
         backSwitch = true
     } else if (cardCVV.text.length == 2) {
@@ -62,7 +79,7 @@ fun CreditCard(
         backSwitch = false
     }
 
-    // Show card type logo depending on the card number
+    // Detect and set the card type logo based on the card number's first digit
     cardType = when {
         cardNumber.text.isNotEmpty() -> {
             when (cardNumber.text[0]) { // // Taking the first digits for identifying which card is it
@@ -77,8 +94,7 @@ fun CreditCard(
         else -> Card.None
     }
 
-    // Set Card Color according to the card type
-
+    // Set the card's background color based on its type
     val animatedColor = animateColorAsState(
         targetValue =
         if (cardType == Card.Visa) {
