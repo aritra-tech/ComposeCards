@@ -49,8 +49,9 @@ fun CreditCard(
     var backSwitch by remember { mutableStateOf(false) }
     var cardType by remember { mutableStateOf(Card.None) }
     val length = if (cardNumber.text.length > 16) 16 else cardNumber.text.length
-    val maskedNumber =
-        remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
+    val maskedNumber = remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
+    val cvv = if (cardCVV.text.length > 3) 3 else cardCVV.text.length
+    val maskedCVV = remember { "*".repeat(3) }.replaceRange(0 until cvv, cardCVV.text.take(3))
 
     // Switch to back side of the card depending on the cvv number
     if (cardCVV.text.length == 1 && !backSwitch) {
@@ -235,7 +236,7 @@ fun CreditCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = cardCVV.text,
+                    text = maskedCVV,
                     style = MaterialTheme.typography.h6,
                     color = Color.White,
                     modifier = Modifier
