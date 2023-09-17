@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.aritra.compose_cards.R
+import com.aritra.compose_cards.util.Card
 
 /**
  * Composable function to display a Credit Card view with animated flip functionality.
@@ -158,7 +159,7 @@ fun CreditCard(
                             color = Color.White,
                             modifier = Modifier
                                 .animateContentSize(spring())
-                                .padding(bottom = 10.dp)
+                                .padding(bottom = 20.dp)
                                 .constrainAs(number) {
                                     linkTo(
                                         start = parent.start,
@@ -267,16 +268,7 @@ fun CreditCard(
     }
 }
 
-enum class Card(
-    val title: String,
-    @DrawableRes val image: Int
-) {
-    None("", R.drawable.ic_visa),
-    Visa("", R.drawable.ic_visa),
-    Mastercard("", R.drawable.ic_mastercard),
-    RuPay("", R.drawable.rupay_logo),
-    AmericanExpress("", R.drawable.amex_logo)
-}
+
 
 @Preview
 @Composable
