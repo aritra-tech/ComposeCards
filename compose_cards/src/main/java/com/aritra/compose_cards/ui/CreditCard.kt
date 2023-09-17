@@ -1,12 +1,12 @@
 package com.aritra.compose_cards.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,7 +36,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.aritra.compose_cards.R
 import com.aritra.compose_cards.util.Card
 
 /**
@@ -98,16 +97,22 @@ fun CreditCard(
     // Set the card's background color based on its type
     val animatedColor = animateColorAsState(
         targetValue =
-        if (cardType == Card.Visa) {
-            Color(0xFF1C478B)
-        } else if (cardType == Card.Mastercard) {
-            Color(0xFF3BB9A1)
-        } else if (cardType == Card.RuPay) {
-            Color(0xFFB2B1FD)
-        } else if (cardType == Card.AmericanExpress) {
-            Color(0xFFA671FC)
-        } else {
-            MaterialTheme.colors.onBackground
+        when (cardType) {
+            Card.Visa -> {
+                Color(0xFF1C478B)
+            }
+            Card.Mastercard -> {
+                Color(0xFF3BB9A1)
+            }
+            Card.RuPay -> {
+                Color(0xFFB2B1FD)
+            }
+            Card.AmericanExpress -> {
+                Color(0xFFA671FC)
+            }
+            else -> {
+                MaterialTheme.colors.onBackground
+            }
         },
         label = ""
     )
@@ -119,7 +124,11 @@ fun CreditCard(
                 .fillMaxWidth()
                 .height(200.dp)
                 .graphicsLayer(
-                    rotationY = animateFloatAsState(if (backSwitch) 180f else 0f, label = "").value,
+                    rotationY = animateFloatAsState(
+                        if (backSwitch) 180f else 0f,
+                        label = "",
+                        animationSpec = tween(500),
+                    ).value,
                     translationY = 0f
                 )
                 .clickable {
