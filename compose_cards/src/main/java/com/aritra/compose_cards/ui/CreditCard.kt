@@ -118,7 +118,7 @@ fun CreditCard(
                 .fillMaxWidth()
                 .height(200.dp)
                 .graphicsLayer(
-                    rotationY = animateFloatAsState(if (backSwitch) 180f else 0f).value,
+                    rotationY = animateFloatAsState(if (backSwitch) 180f else 0f, label = "").value,
                     translationY = 0f
                 )
                 .clickable {
@@ -140,7 +140,7 @@ fun CreditCard(
 
                         AnimatedVisibility(visible = cardType != Card.None,
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(start = 12.dp,bottom = 10.dp)
                                 .constrainAs(cardImage) {
                                     start.linkTo(parent.start)
                                     top.linkTo(parent.top)
@@ -153,11 +153,12 @@ fun CreditCard(
 
                         Text(
                             text = maskedNumber.chunked(4).joinToString(" "),
-                            style = MaterialTheme.typography.h6,
+                            style = MaterialTheme.typography.h5,
                             maxLines = 1,
                             color = Color.White,
                             modifier = Modifier
                                 .animateContentSize(spring())
+                                .padding(bottom = 10.dp)
                                 .constrainAs(number) {
                                     linkTo(
                                         start = parent.start,
