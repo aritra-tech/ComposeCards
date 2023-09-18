@@ -64,7 +64,8 @@ fun CreditCard(
 
     // Calculate the length of the card number and mask it for display
     val length = if (cardNumber.text.length > 16) 16 else cardNumber.text.length
-    val maskedNumber = remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
+    val maskedNumber =
+        remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
 
 
     val cvv = if (cardCVV.text.length > 3) 3 else cardCVV.text.length
@@ -101,15 +102,19 @@ fun CreditCard(
             Card.Visa -> {
                 Color(0xFF1C478B)
             }
+
             Card.Mastercard -> {
                 Color(0xFF3BB9A1)
             }
+
             Card.RuPay -> {
                 Color(0xFFB2B1FD)
             }
+
             Card.AmericanExpress -> {
                 Color(0xFFA671FC)
             }
+
             else -> {
                 MaterialTheme.colors.onBackground
             }
@@ -150,7 +155,7 @@ fun CreditCard(
 
                         AnimatedVisibility(visible = cardType != Card.None,
                             modifier = Modifier
-                                .padding(start = 12.dp,bottom = 10.dp)
+                                .padding(start = 12.dp, bottom = 10.dp)
                                 .constrainAs(cardImage) {
                                     start.linkTo(parent.start)
                                     top.linkTo(parent.top)
@@ -259,13 +264,13 @@ fun CreditCard(
                 modifier = Modifier
                     .defaultMinSize(minWidth = 60.dp)
                     .clip(RoundedCornerShape(4.dp))
-                    .background(Color.Gray),
+                    .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = maskedCVV,
                     style = MaterialTheme.typography.h6,
-                    color = Color.White,
+                    color = Color.Black,
                     modifier = Modifier
                         .animateContentSize(TweenSpec(300))
                         .padding(vertical = 4.dp, horizontal = 16.dp)
@@ -278,10 +283,9 @@ fun CreditCard(
 }
 
 
-
 @Preview
 @Composable
-fun PreviewPaymentCard(){
+fun PreviewPaymentCard() {
     CreditCard(
         TextFieldValue("*****************"),
         TextFieldValue("Aritra Das"),
