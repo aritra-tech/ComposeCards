@@ -83,11 +83,13 @@ fun CreditCard(
     // Detect and set the card type logo based on the card number's first digit
     cardType = when {
         cardNumber.text.isNotEmpty() -> {
-            when (cardNumber.text[0]) { // // Taking the first digits for identifying which card is it
-                '4' -> Card.Visa
-                '5' -> Card.Mastercard
-                '6' -> Card.RuPay
-                '3' -> Card.AmericanExpress
+            when (cardNumber.text.take(2)) {
+                "30", "36", "38" -> Card.DinersClub
+                "40" -> Card.Visa
+                "50", "51", "52", "53", "54", "55" -> Card.Mastercard
+                "56","57", "58", "63", "67" -> Card.Maestro
+                "60" -> Card.RuPay
+                "37" -> Card.AmericanExpress
                 else -> Card.None
             }
         }
@@ -115,6 +117,13 @@ fun CreditCard(
                 Color(0xFFA671FC)
             }
 
+            Card.Maestro -> {
+                Color(0xFF99BEF8)
+            }
+
+            Card.DinersClub -> {
+                Color(0xFFFC4444)
+            }
             else -> {
                 MaterialTheme.colors.onBackground
             }
@@ -155,7 +164,7 @@ fun CreditCard(
 
                         AnimatedVisibility(visible = cardType != Card.None,
                             modifier = Modifier
-                                .padding(start = 12.dp, bottom = 10.dp)
+                                .padding(start = 12.dp, top = 10.dp)
                                 .constrainAs(cardImage) {
                                     start.linkTo(parent.start)
                                     top.linkTo(parent.top)
