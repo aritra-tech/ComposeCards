@@ -64,7 +64,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.aritra-tech"
             artifactId = "ComposeCards"
-            version = "1.0.3"
+            version = "1.1.3"
 
             afterEvaluate {
                 from(components["release"])
