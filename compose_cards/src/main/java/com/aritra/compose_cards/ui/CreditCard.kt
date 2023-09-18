@@ -1,12 +1,12 @@
 package com.aritra.compose_cards.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,7 +36,17 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.aritra.compose_cards.R
+import com.aritra.compose_cards.util.Card
+
+/**
+ * Composable function to display a Credit Card view with animated flip functionality.
+ *
+ * @param cardNumber The text input for the credit card number.
+ * @param holderName The text input for the cardholder's name.
+ * @param expiryDate The text input for the card's expiry date.
+ * @param cardCVV The text input for the card's CVV (Card Verification Value) number.
+ */
+
 
 @Composable
 fun CreditCard(
@@ -46,13 +56,22 @@ fun CreditCard(
     cardCVV: TextFieldValue
 ) {
 
+    // Mutable state to track the flip state of the card
     var backSwitch by remember { mutableStateOf(false) }
+
+    // Mutable state to track the detected card type (Visa, Mastercard, etc.)
     var cardType by remember { mutableStateOf(Card.None) }
+
+    // Calculate the length of the card number and mask it for display
     val length = if (cardNumber.text.length > 16) 16 else cardNumber.text.length
     val maskedNumber =
         remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
 
-    // Switch to back side of the card depending on the cvv number
+
+    val cvv = if (cardCVV.text.length > 3) 3 else cardCVV.text.length
+    val maskedCVV = remember { "*".repeat(3) }.replaceRange(0 until cvv, cardCVV.text.take(3))
+
+    // Determine whether to switch to the back side of the card based on CVV length
     if (cardCVV.text.length == 1 && !backSwitch) {
         backSwitch = true
     } else if (cardCVV.text.length == 2) {
@@ -61,14 +80,16 @@ fun CreditCard(
         backSwitch = false
     }
 
-    // Show card type logo depending on the card number
+    // Detect and set the card type logo based on the card number's first digit
     cardType = when {
         cardNumber.text.isNotEmpty() -> {
-            when (cardNumber.text[0]) { // // Taking the first digits for identifying which card is it
-                '4' -> Card.Visa
-                '5' -> Card.Mastercard
-                '6' -> Card.RuPay
-                '3' -> Card.AmericanExpress
+            when (cardNumber.text.take(2)) {
+                "30", "36", "38" -> Card.DinersClub
+                "40" -> Card.Visa
+                "50", "51", "52", "53", "54", "55" -> Card.Mastercard
+                "56","57", "58", "63", "67" -> Card.Maestro
+                "60" -> Card.RuPay
+                "37" -> Card.AmericanExpress
                 else -> Card.None
             }
         }
@@ -76,20 +97,36 @@ fun CreditCard(
         else -> Card.None
     }
 
-    // Set Card Color according to the card type
-
+    // Set the card's background color based on its type
     val animatedColor = animateColorAsState(
         targetValue =
-        if (cardType == Card.Visa) {
-            Color(0xFF1C478B)
-        } else if (cardType == Card.Mastercard) {
-            Color(0xFF3BB9A1)
-        } else if (cardType == Card.RuPay) {
-            Color(0xFFB2B1FD)
-        } else if (cardType == Card.AmericanExpress) {
-            Color(0xFFA671FC)
-        } else {
-            MaterialTheme.colors.onBackground
+        when (cardType) {
+            Card.Visa -> {
+                Color(0xFF1C478B)
+            }
+
+            Card.Mastercard -> {
+                Color(0xFF3BB9A1)
+            }
+
+            Card.RuPay -> {
+                Color(0xFFB2B1FD)
+            }
+
+            Card.AmericanExpress -> {
+                Color(0xFFA671FC)
+            }
+
+            Card.Maestro -> {
+                Color(0xFF99BEF8)
+            }
+
+            Card.DinersClub -> {
+                Color(0xFFFC4444)
+            }
+            else -> {
+                MaterialTheme.colors.onBackground
+            }
         },
         label = ""
     )
@@ -101,7 +138,11 @@ fun CreditCard(
                 .fillMaxWidth()
                 .height(200.dp)
                 .graphicsLayer(
-                    rotationY = animateFloatAsState(if (backSwitch) 180f else 0f).value,
+                    rotationY = animateFloatAsState(
+                        if (backSwitch) 180f else 0f,
+                        label = "",
+                        animationSpec = tween(500),
+                    ).value,
                     translationY = 0f
                 )
                 .clickable {
@@ -123,7 +164,7 @@ fun CreditCard(
 
                         AnimatedVisibility(visible = cardType != Card.None,
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(start = 12.dp, top = 10.dp)
                                 .constrainAs(cardImage) {
                                     start.linkTo(parent.start)
                                     top.linkTo(parent.top)
@@ -136,11 +177,12 @@ fun CreditCard(
 
                         Text(
                             text = maskedNumber.chunked(4).joinToString(" "),
-                            style = MaterialTheme.typography.h6,
+                            style = MaterialTheme.typography.h5,
                             maxLines = 1,
                             color = Color.White,
                             modifier = Modifier
                                 .animateContentSize(spring())
+                                .padding(bottom = 20.dp)
                                 .constrainAs(number) {
                                     linkTo(
                                         start = parent.start,
@@ -231,15 +273,15 @@ fun CreditCard(
                 modifier = Modifier
                     .defaultMinSize(minWidth = 60.dp)
                     .clip(RoundedCornerShape(4.dp))
-                    .background(Color.Gray),
+                    .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = cardCVV.text,
+                    text = maskedCVV,
                     style = MaterialTheme.typography.h6,
-                    color = Color.White,
+                    color = Color.Black,
                     modifier = Modifier
-                        .animateContentSize()
+                        .animateContentSize(TweenSpec(300))
                         .padding(vertical = 4.dp, horizontal = 16.dp)
 
                 )
@@ -249,20 +291,10 @@ fun CreditCard(
     }
 }
 
-enum class Card(
-    val title: String,
-    @DrawableRes val image: Int
-) {
-    None("", R.drawable.ic_visa),
-    Visa("", R.drawable.ic_visa),
-    Mastercard("", R.drawable.ic_mastercard),
-    RuPay("", R.drawable.rupay_logo),
-    AmericanExpress("", R.drawable.amex_logo)
-}
 
 @Preview
 @Composable
-fun PreviewPaymentCard(){
+fun PreviewPaymentCard() {
     CreditCard(
         TextFieldValue("*****************"),
         TextFieldValue("Aritra Das"),
