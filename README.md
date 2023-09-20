@@ -90,6 +90,10 @@ If you encounter any issues or have feature requests, please create a new [issue
 Support it by joining __[stargazers](https://github.com/aritra-tech/ComposeCards/stargazers)__ for this repository. :star: <br>
 Also __[follow](https://github.com/aritra-tech)__ me for my next creations! 🤩
 
+# Star History ⭐ 
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aritra-tech/ComposeCards&type=Date)](https://star-history.com/#aritra-tech/ComposeCards&Date)
+
 ## License
 
 ```
