@@ -1,8 +1,7 @@
-import com.android.build.gradle.internal.utils.createPublishingInfoForLibrary
-
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     id ("maven-publish")
 }
 
@@ -36,9 +35,6 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -49,14 +45,14 @@ android {
 
 dependencies {
 
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.compose.ui:ui:1.5.1")
-    implementation("androidx.compose.material:material:1.6.0-alpha05")
-    implementation("androidx.compose.ui:ui-graphics:1.5.1")
-    implementation("androidx.compose.foundation:foundation:1.6.0-alpha05")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.5.1")
-    implementation("androidx.compose.ui:ui-tooling:1.5.1")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha12")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.constraintlayout.compose)
 }
 
 publishing {
@@ -64,7 +60,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.aritra-tech"
             artifactId = "ComposeCards"
-            version = "1.1.3"
+            version = "1.1.4"
 
             afterEvaluate {
                 from(components["release"])
