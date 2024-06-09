@@ -32,9 +32,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.aritra.compose_cards.util.Card
 
@@ -180,6 +182,8 @@ fun CreditCard(
                             style = MaterialTheme.typography.h5,
                             maxLines = 1,
                             color = Color.White,
+                            fontSize = 25.sp,
+                            fontWeight = FontWeight.Normal,
                             modifier = Modifier
                                 .animateContentSize(spring())
                                 .padding(bottom = 20.dp)
@@ -209,6 +213,8 @@ fun CreditCard(
                         Text(
                             text = holderName.text,
                             color = Color.White,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .animateContentSize(TweenSpec(300))
                                 .padding(top = 10.dp, start = 16.dp, bottom = 16.dp)
@@ -232,6 +238,8 @@ fun CreditCard(
                         Text(
                             text = expiryDate.text.take(4).chunked(2).joinToString(" / "),
                             color = Color.White,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .padding(top = 10.dp, end = 16.dp, bottom = 16.dp)
                                 .constrainAs(cardExpiry) {
@@ -283,7 +291,6 @@ fun CreditCard(
                     modifier = Modifier
                         .animateContentSize(TweenSpec(300))
                         .padding(vertical = 4.dp, horizontal = 16.dp)
-
                 )
             }
 
