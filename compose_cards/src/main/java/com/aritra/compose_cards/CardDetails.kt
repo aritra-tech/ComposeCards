@@ -12,27 +12,27 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aritra.compose_cards.component.CardNumberFilter
 import com.aritra.compose_cards.component.InputTextField
 import com.aritra.compose_cards.ui.CreditCard
 
 @Composable
-fun CardDetails() {
-    var cardNumber by remember { mutableStateOf(TextFieldValue()) }
-    var cardHolderName by remember { mutableStateOf(TextFieldValue()) }
-    var expiryDate by remember { mutableStateOf(TextFieldValue()) }
-    var cardCVV by remember { mutableStateOf(TextFieldValue()) }
+fun CardDetails(
+    cardNumber: TextFieldValue,
+    onCardNumberChange: (TextFieldValue) -> Unit,
+    cardHolderName: TextFieldValue,
+    onCardHolderNameChange: (TextFieldValue) -> Unit,
+    expiryDate: TextFieldValue,
+    onExpiryDateChange: (TextFieldValue) -> Unit,
+    cardCVV: TextFieldValue,
+    onCardCVVChange: (TextFieldValue) -> Unit
+) {
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -52,7 +52,7 @@ fun CardDetails() {
                 textFieldValue = cardNumber,
                 label = stringResource(R.string.your_card_number),
                 keyboardType = KeyboardType.Number,
-                onTextChanged = { cardNumber = it },
+                onTextChanged = onCardNumberChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 5.dp),
@@ -63,7 +63,7 @@ fun CardDetails() {
                 textFieldValue = cardHolderName,
                 label = stringResource(R.string.card_holder_name),
                 keyboardType = KeyboardType.Text,
-                onTextChanged = { cardHolderName = it },
+                onTextChanged = onCardHolderNameChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 5.dp),
@@ -79,7 +79,7 @@ fun CardDetails() {
                     textFieldValue = expiryDate,
                     label = stringResource(R.string.expiry_date),
                     keyboardType = KeyboardType.Number,
-                    onTextChanged = { expiryDate = it },
+                    onTextChanged = onExpiryDateChange,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -88,7 +88,7 @@ fun CardDetails() {
                     textFieldValue = cardCVV,
                     label = stringResource(R.string.cvv),
                     keyboardType = KeyboardType.Number,
-                    onTextChanged = { cardCVV = it },
+                    onTextChanged = onCardCVVChange,
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 8.dp)
@@ -115,11 +115,3 @@ fun CardDetails() {
     }
 }
 
-@Preview(
-    showBackground = true, backgroundColor = 0xFFFFFEFE,
-    device = "id:pixel_6_pro"
-)
-@Composable
-fun Card() {
-    CardDetails()
-}
