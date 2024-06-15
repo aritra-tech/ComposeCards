@@ -18,9 +18,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun InputTextField(
-    textFieldValue: TextFieldValue,
+    textFieldValue: String,
     label: String,
-    onTextChanged: (TextFieldValue) -> Unit,
+    onTextChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textStyle: TextStyle = MaterialTheme.typography.body1.copy(color = Color.Black),
