@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,10 +51,10 @@ import com.aritra.compose_cards.util.Card
 
 @Composable
 fun CreditCard(
-    cardNumber: TextFieldValue,
-    holderName: TextFieldValue,
-    expiryDate: TextFieldValue,
-    cardCVV: TextFieldValue
+    cardNumber: String,
+    holderName: String,
+    expiryDate: String,
+    cardCVV: String
 ) {
 
     // Mutable state to track the flip state of the card
@@ -65,27 +64,27 @@ fun CreditCard(
     var cardType by remember { mutableStateOf(Card.None) }
 
     // Calculate the length of the card number and mask it for display
-    val length = if (cardNumber.text.length > 16) 16 else cardNumber.text.length
+    val length = if (cardNumber.length > 16) 16 else cardNumber.length
     val maskedNumber =
-        remember { "*****************" }.replaceRange(0..length, cardNumber.text.take(16))
+        remember { "*****************" }.replaceRange(0..length, cardNumber.take(16))
 
 
-    val cvv = if (cardCVV.text.length > 3) 3 else cardCVV.text.length
-    val maskedCVV = remember { "*".repeat(3) }.replaceRange(0 until cvv, cardCVV.text.take(3))
+    val cvv = if (cardCVV.length > 3) 3 else cardCVV.length
+    val maskedCVV = remember { "*".repeat(3) }.replaceRange(0 until cvv, cardCVV.take(3))
 
     // Determine whether to switch to the back side of the card based on CVV length
-    if (cardCVV.text.length == 1 && !backSwitch) {
+    if (cardCVV.length == 1 && !backSwitch) {
         backSwitch = true
-    } else if (cardCVV.text.length == 2) {
+    } else if (cardCVV.length == 2) {
         backSwitch = true
-    } else if (cardCVV.text.length == 3) {
+    } else if (cardCVV.length == 3) {
         backSwitch = false
     }
 
     // Detect and set the card type logo based on the card number's first digit
     cardType = when {
-        cardNumber.text.isNotEmpty() -> {
-            when (cardNumber.text.take(2)) {
+        cardNumber.isNotEmpty() -> {
+            when (cardNumber.take(2)) {
                 "30", "36", "38" -> Card.DinersClub
                 "40" -> Card.Visa
                 "50", "51", "52", "53", "54", "55" -> Card.Mastercard
@@ -211,7 +210,7 @@ fun CreditCard(
                         )
 
                         Text(
-                            text = holderName.text,
+                            text = holderName,
                             color = Color.White,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
@@ -236,7 +235,7 @@ fun CreditCard(
                         )
 
                         Text(
-                            text = expiryDate.text.take(4).chunked(2).joinToString(" / "),
+                            text = expiryDate.take(4).chunked(2).joinToString(" / "),
                             color = Color.White,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
@@ -303,9 +302,9 @@ fun CreditCard(
 @Composable
 fun PreviewPaymentCard() {
     CreditCard(
-        TextFieldValue("*****************"),
-        TextFieldValue("Aritra Das"),
-        TextFieldValue("0229"),
-        TextFieldValue("699")
+        "*****************",
+        "Aritra Das",
+        "0229",
+        "699"
     )
 }
