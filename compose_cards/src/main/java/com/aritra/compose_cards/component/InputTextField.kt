@@ -24,15 +24,13 @@ fun InputTextField(
     modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textStyle: TextStyle = MaterialTheme.typography.body1.copy(color = Color.Black),
-    keyboardType: KeyboardType = KeyboardType.Text
-) {
+    keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+    ) {
     OutlinedTextField(
         value = textFieldValue,
         onValueChange = { onTextChanged(it) },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = ImeAction.Next
-        ),
+        keyboardOptions = keyboardOptions,
         textStyle = textStyle,
         maxLines = 1,
         singleLine = true,

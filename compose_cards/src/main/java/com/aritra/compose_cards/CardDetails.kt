@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -19,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.aritra.compose_cards.component.CardNumberFilter
@@ -54,28 +56,30 @@ fun CardDetails(
                 .fillMaxWidth()
         ) {
             InputTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 5.dp),
                 textFieldValue = cardNumber,
                 label = stringResource(R.string.your_card_number),
                 keyboardType = KeyboardType.Number,
                 onTextChanged = {
                     cardNumber = it
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 5.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
                 visualTransformation = CardNumberFilter
             )
 
             InputTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 5.dp),
                 textFieldValue = cardHolderName,
                 label = stringResource(R.string.card_holder_name),
                 keyboardType = KeyboardType.Text,
                 onTextChanged = {
                     cardHolderName = it
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 5.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
             )
 
             Row(
@@ -85,26 +89,28 @@ fun CardDetails(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 InputTextField(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
                     textFieldValue = expiryDate,
                     label = stringResource(R.string.expiry_date),
                     keyboardType = KeyboardType.Number,
                     onTextChanged = {
                         expiryDate = it
                     },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
                 )
                 InputTextField(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp),
                     textFieldValue = cardCVV,
                     label = stringResource(R.string.cvv),
                     keyboardType = KeyboardType.Number,
                     onTextChanged = {
                         cardCVV = it
                     },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 8.dp)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                 )
             }
 
