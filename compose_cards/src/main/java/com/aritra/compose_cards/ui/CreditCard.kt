@@ -18,9 +18,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -126,7 +126,7 @@ fun CreditCard(
                 Color(0xFFFC4444)
             }
             else -> {
-                MaterialTheme.colors.onBackground
+                MaterialTheme.colorScheme.onBackground
             }
         },
         label = ""
@@ -151,7 +151,6 @@ fun CreditCard(
                 },
             shape = RoundedCornerShape(20.dp),
             color = animatedColor.value,
-            elevation = 18.dp
         ) {
             Box(
                 modifier = Modifier.fillMaxSize()
@@ -178,7 +177,7 @@ fun CreditCard(
 
                         Text(
                             text = maskedNumber.chunked(4).joinToString(" "),
-                            style = MaterialTheme.typography.h5,
+                            style = MaterialTheme.typography.headlineLarge,
                             maxLines = 1,
                             color = Color.White,
                             fontSize = 25.sp,
@@ -285,7 +284,7 @@ fun CreditCard(
             ) {
                 Text(
                     text = maskedCVV,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.bodyLarge,
                     color = Color.Black,
                     modifier = Modifier
                         .animateContentSize(TweenSpec(300))
