@@ -77,7 +77,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeCardsTheme {
-                CardDetails()
+                CardDetails(
+                    creditCardNumber = "378282246310005",
+                    creditCardHolderName = "John Doe",
+                    creditCardExpiryDate = "02/29,
+                    creditCardCVV = "101",
+                    onSave = {}
+                )
             }
         }
     }
