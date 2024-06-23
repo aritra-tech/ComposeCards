@@ -21,7 +21,7 @@
 
 
  ## What's included?📜
-- 🗂️Automatic card type recognition that supports the following cards:
+- 🗂️ Automatic card type recognition that supports the following cards:
   - Visa
   - Mastercard
   - RuPay
@@ -29,7 +29,7 @@
   - Maestro
   - Diners Club
 
-- 🤩Simple VisualTransformation subclasses for the following use cases:
+- 🤩 Simple VisualTransformation subclasses for the following use cases:
   - Card number (with custom separators, digit masking)
 
 ## Adding the library to your project✨
@@ -72,16 +72,15 @@ dependencies {
 ## Usage📓
 You can use the `CardDetails` by simply passing this to the screen you want to use. For example:
 ```Kotlin
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ComposeCardsTheme {
-                CardDetails()
-            }
-        }
-    }
-}
+
+CardDetails(
+	creditCardNumber = "378282246310005",
+	creditCardHolderName = "John Doe",
+	creditCardExpiryDate = "02/29",
+	creditCardCVV = "101",
+	onSave = {}
+)
+
 ```
 ## Reporting Issues and Requesting Features✨
 If you encounter any issues or have feature requests, please create a new [issue](https://github.com/aritra-tech/ComposeCards/issues) in this repository.
