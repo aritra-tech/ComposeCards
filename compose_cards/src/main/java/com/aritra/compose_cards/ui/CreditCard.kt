@@ -42,13 +42,22 @@ import com.aritra.compose_cards.util.Card
 
 @Composable
 fun CreditCard(
-    cardNumber: String,
-    holderName: String,
-    expiryDate: String,
-    cardCVV: String
+    cardNumber: String, holderName: String, expiryDate: String, cardCVV: String
 ) {
     var backSwitch by remember { mutableStateOf(false) }
     var cardType by remember { mutableStateOf(Card.None) }
+
+    val rotation by animateFloatAsState(
+        targetValue = if (backSwitch) 180f else 0f,
+        animationSpec = tween(500),
+        label = ""
+    )
+
+    val animateFront by animateFloatAsState(
+        targetValue = if (!backSwitch) 1f else 0f,
+        animationSpec = tween(500),
+        label = ""
+    )
 
     val length = if (cardNumber.length > 16) 16 else cardNumber.length
     val maskedNumber = remember { "*****************" }.replaceRange(0..length, cardNumber.take(16))
@@ -70,12 +79,13 @@ fun CreditCard(
                 "30", "36", "38" -> Card.DinersClub
                 "40" -> Card.Visa
                 "50", "51", "52", "53", "54", "55" -> Card.Mastercard
-                "56","57", "58", "63", "67" -> Card.Maestro
+                "56", "57", "58", "63", "67" -> Card.Maestro
                 "60" -> Card.RuPay
                 "37" -> Card.AmericanExpress
                 else -> Card.None
             }
         }
+
         else -> Card.None
     }
 
@@ -88,26 +98,21 @@ fun CreditCard(
             Card.Maestro -> Color(0xFF99BEF8)
             Card.DinersClub -> Color(0xFFFC4444)
             else -> MaterialTheme.colorScheme.onBackground
-        },
-        label = ""
+        }, label = ""
     )
 
     Box {
         Surface(
             modifier = Modifier
-                .padding(16.dp)
                 .fillMaxWidth()
                 .height(200.dp)
-                .graphicsLayer(
-                    rotationY = animateFloatAsState(
-                        if (backSwitch) 180f else 0f,
-                        label = "",
-                        animationSpec = tween(durationMillis = 600, easing = FastOutSlowInEasing),
-                    ).value,
-                    cameraDistance = 30f
-                )
+                .padding(10.dp)
+                .graphicsLayer {
+                    rotationY = rotation
+                    cameraDistance = 8 * density
+                }
                 .clickable { backSwitch = !backSwitch },
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(14.dp),
             color = animatedColor.value,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -129,68 +134,86 @@ fun CreditCard(
                         }
 
                         Text(
+                            modifier = Modifier
+                                .padding(bottom = 20.dp)
+                                .graphicsLayer {
+                                    alpha = animateFront
+                                }
+                                .constrainAs(number) {
+                                    linkTo(start = parent.start, end = parent.end)
+                                    linkTo(top = parent.top, bottom = parent.bottom)
+                                },
                             text = maskedNumber.chunked(4).joinToString(" "),
                             style = MaterialTheme.typography.headlineLarge,
                             maxLines = 1,
                             color = Color.White,
                             fontSize = 25.sp,
-                            fontWeight = FontWeight.Normal,
-                            modifier = Modifier
-                                .animateContentSize(spring())
-                                .padding(bottom = 20.dp)
-                                .constrainAs(number) {
-                                    linkTo(start = parent.start, end = parent.end)
-                                    linkTo(top = parent.top, bottom = parent.bottom)
-                                }
+                            fontWeight = FontWeight.Normal
                         )
 
                         Text(
-                            text = "Card Holder Name",
-                            color = Color.White,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
+                                .graphicsLayer {
+                                    alpha = animateFront
+                                }
                                 .constrainAs(cardHolderName) {
                                     start.linkTo(parent.start)
                                     bottom.linkTo(cardName.top)
-                                }
+                                },
+                            text = "Card Holder",
+                            color = Color.White,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.Bold
                         )
 
                         Text(
-                            text = holderName,
-                            color = Color.White,
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold,
                             modifier = Modifier
-                                .animateContentSize(TweenSpec(300))
+                                .graphicsLayer {
+                                    alpha = animateFront
+                                }
                                 .padding(top = 10.dp, start = 16.dp, bottom = 16.dp)
                                 .constrainAs(cardName) {
                                     start.linkTo(parent.start)
                                     bottom.linkTo(parent.bottom)
-                                }
+                                },
+                            text = holderName,
+                            color = Color.White,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold
+
                         )
 
                         Text(
-                            text = "Expiry Date",
-                            color = Color.White,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
+                                .graphicsLayer {
+                                    alpha = animateFront
+                                }
                                 .constrainAs(expiry) {
                                     end.linkTo(parent.end)
                                     bottom.linkTo(cardExpiry.top)
-                                }
+                                },
+                            text = "Expiry Date",
+                            color = Color.White,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.Bold
                         )
 
                         Text(
-                            text = expiryDate.take(4).chunked(2).joinToString(" / "),
-                            color = Color.White,
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .padding(top = 10.dp, end = 16.dp, bottom = 16.dp)
+                                .graphicsLayer {
+                                    alpha = animateFront
+                                }
                                 .constrainAs(cardExpiry) {
                                     end.linkTo(parent.end)
                                     bottom.linkTo(parent.bottom)
-                                }
+                                },
+                            text = expiryDate.take(4).chunked(2).joinToString(" / "),
+                            color = Color.White,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -204,8 +227,7 @@ fun CreditCard(
                             .fillMaxWidth()
                             .constrainAs(back) {
                                 linkTo(top = parent.top, bottom = parent.bottom)
-                            }
-                        )
+                            })
                     }
                 }
             }
@@ -214,19 +236,20 @@ fun CreditCard(
         AnimatedVisibility(
             visible = backSwitch,
             modifier = Modifier
-                .padding(end = 50.dp, bottom = 50.dp)
+                .padding(end = 50.dp, bottom = 30.dp)
                 .align(Alignment.BottomEnd)
         ) {
             Box(
                 modifier = Modifier
                     .defaultMinSize(minWidth = 60.dp)
                     .clip(RoundedCornerShape(4.dp))
-                    .background(Color.White),
-                contentAlignment = Alignment.Center
+                    .background(Color.White), contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = maskedCVV,
                     style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 15.sp,
                     color = Color.Black,
                     modifier = Modifier
                         .animateContentSize(TweenSpec(300))
@@ -241,9 +264,6 @@ fun CreditCard(
 @Composable
 fun PreviewPaymentCard() {
     CreditCard(
-        "*****************",
-        "Aritra Das",
-        "0229",
-        "699"
+        "*****************", "Aritra Das", "0229", "699"
     )
 }
