@@ -3,10 +3,8 @@ package com.aritra.compose_cards.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,7 +40,11 @@ import com.aritra.compose_cards.util.Card
 
 @Composable
 fun CreditCard(
-    cardNumber: String, holderName: String, expiryDate: String, cardCVV: String
+    cardNumber: String,
+    holderName: String,
+    expiryDate: String,
+    cardCVV: String,
+    cardColor: Color
 ) {
     var backSwitch by remember { mutableStateOf(false) }
     var cardType by remember { mutableStateOf(Card.None) }
@@ -113,7 +115,7 @@ fun CreditCard(
                 }
                 .clickable { backSwitch = !backSwitch },
             shape = RoundedCornerShape(14.dp),
-            color = animatedColor.value,
+            color = cardColor,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 AnimatedVisibility(visible = !backSwitch) {
@@ -260,10 +262,3 @@ fun CreditCard(
     }
 }
 
-@Preview
-@Composable
-fun PreviewPaymentCard() {
-    CreditCard(
-        "*****************", "Aritra Das", "0229", "699"
-    )
-}

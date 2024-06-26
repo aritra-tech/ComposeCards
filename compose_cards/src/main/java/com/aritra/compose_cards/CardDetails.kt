@@ -1,17 +1,23 @@
 package com.aritra.compose_cards
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,6 +47,7 @@ fun CardDetails(
     var cardHolderName by remember { mutableStateOf(creditCardHolderName) }
     var expiryDate by remember { mutableStateOf(creditCardExpiryDate) }
     var cardCVV by remember { mutableStateOf(creditCardCVV) }
+    var selectedColor by remember { mutableStateOf(Color.Transparent) }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -47,8 +55,20 @@ fun CardDetails(
             cardNumber = cardNumber,
             holderName = cardHolderName,
             expiryDate = expiryDate,
-            cardCVV = cardCVV
+            cardCVV = cardCVV,
+            cardColor = selectedColor
         )
+
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            ColorButton(Color(0xFF3BB9A1)) { selectedColor = Color(0xFF3BB9A1) }
+            ColorButton(Color(0xFFA671FC)) { selectedColor = Color(0xFFA671FC) }
+            ColorButton(Color(0xFF99BEF8)) { selectedColor = Color(0xFF99BEF8) }
+        }
 
         Column(
             modifier = Modifier
@@ -121,16 +141,26 @@ fun CardDetails(
                 modifier = Modifier
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.onBackground)
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onBackground)
             ) {
                 Text(
                     text = stringResource(id = R.string.save),
-                    color = MaterialTheme.colors.onPrimary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(horizontal = 30.dp, vertical = 8.dp)
                 )
             }
 
         }
     }
+}
+
+@Composable
+fun ColorButton(color: Color, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(50.dp)
+            .background(color, CircleShape)
+            .clickable { onClick() }
+    )
 }
 
