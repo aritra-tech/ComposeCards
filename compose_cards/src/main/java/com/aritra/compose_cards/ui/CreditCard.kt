@@ -1,7 +1,6 @@
 package com.aritra.compose_cards.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
@@ -28,11 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -44,7 +44,7 @@ fun CreditCard(
     holderName: String,
     expiryDate: String,
     cardCVV: String,
-    cardColor: Color
+    selectedBackground: Int
 ) {
     var backSwitch by remember { mutableStateOf(false) }
     var cardType by remember { mutableStateOf(Card.None) }
@@ -91,18 +91,6 @@ fun CreditCard(
         else -> Card.None
     }
 
-    val animatedColor = animateColorAsState(
-        targetValue = when (cardType) {
-            Card.Visa -> Color(0xFF1C478B)
-            Card.Mastercard -> Color(0xFF3BB9A1)
-            Card.RuPay -> Color(0xFFB2B1FD)
-            Card.AmericanExpress -> Color(0xFFA671FC)
-            Card.Maestro -> Color(0xFF99BEF8)
-            Card.DinersClub -> Color(0xFFFC4444)
-            else -> MaterialTheme.colorScheme.onBackground
-        }, label = ""
-    )
-
     Box {
         Surface(
             modifier = Modifier
@@ -113,11 +101,17 @@ fun CreditCard(
                     rotationY = rotation
                     cameraDistance = 8 * density
                 }
+
                 .clickable { backSwitch = !backSwitch },
-            shape = RoundedCornerShape(14.dp),
-            color = cardColor,
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .clip(RoundedCornerShape(10.dp))
+                    .paint(
+                        painter = painterResource(id = selectedBackground),
+                        contentScale = ContentScale.Crop,
+                    )
+            ) {
                 AnimatedVisibility(visible = !backSwitch) {
                     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                         val (cardImage, cardName, cardHolderName, number, cardExpiry, expiry) = createRefs()

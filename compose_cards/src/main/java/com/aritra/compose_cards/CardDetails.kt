@@ -1,5 +1,6 @@
 package com.aritra.compose_cards
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -20,12 +22,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -47,7 +51,7 @@ fun CardDetails(
     var cardHolderName by remember { mutableStateOf(creditCardHolderName) }
     var expiryDate by remember { mutableStateOf(creditCardExpiryDate) }
     var cardCVV by remember { mutableStateOf(creditCardCVV) }
-    var selectedColor by remember { mutableStateOf(Color.Transparent) }
+    var selectedColor by remember { mutableIntStateOf(R.drawable.violet_bg) }
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -56,8 +60,10 @@ fun CardDetails(
             holderName = cardHolderName,
             expiryDate = expiryDate,
             cardCVV = cardCVV,
-            cardColor = selectedColor
+            selectedBackground = selectedColor
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Row(
             modifier = Modifier
@@ -65,9 +71,10 @@ fun CardDetails(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            ColorButton(Color(0xFF3BB9A1)) { selectedColor = Color(0xFF3BB9A1) }
-            ColorButton(Color(0xFFA671FC)) { selectedColor = Color(0xFFA671FC) }
-            ColorButton(Color(0xFF99BEF8)) { selectedColor = Color(0xFF99BEF8) }
+            BackgroundButton(drawableResId = R.drawable.bg1) { selectedColor = R.drawable.bg1 }
+            BackgroundButton(drawableResId = R.drawable.bg3) { selectedColor = R.drawable.bg3 }
+            BackgroundButton(drawableResId = R.drawable.red_bg) { selectedColor = R.drawable.red_bg }
+            BackgroundButton(drawableResId = R.drawable.circle_bg) { selectedColor = R.drawable.circle_bg }
         }
 
         Column(
@@ -155,12 +162,20 @@ fun CardDetails(
 }
 
 @Composable
-fun ColorButton(color: Color, onClick: () -> Unit) {
+fun BackgroundButton(drawableResId: Int, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(50.dp)
-            .background(color, CircleShape)
-            .clickable { onClick() }
-    )
+            .background(Color.Transparent, CircleShape)
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = drawableResId),
+            contentDescription = null,
+            modifier = Modifier.size(40.dp)
+        )
+    }
 }
+
 
