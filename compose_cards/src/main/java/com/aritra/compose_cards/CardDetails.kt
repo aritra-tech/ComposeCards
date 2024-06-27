@@ -1,10 +1,6 @@
 package com.aritra.compose_cards
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -28,12 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.aritra.compose_cards.component.BackgroundCard
 import com.aritra.compose_cards.component.CardNumberFilter
 import com.aritra.compose_cards.component.InputTextField
 import com.aritra.compose_cards.ui.CreditCard
@@ -71,10 +64,10 @@ fun CardDetails(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BackgroundButton(drawableResId = R.drawable.bg1) { selectedColor = R.drawable.bg1 }
-            BackgroundButton(drawableResId = R.drawable.bg3) { selectedColor = R.drawable.bg3 }
-            BackgroundButton(drawableResId = R.drawable.red_bg) { selectedColor = R.drawable.red_bg }
-            BackgroundButton(drawableResId = R.drawable.circle_bg) { selectedColor = R.drawable.circle_bg }
+            BackgroundCard(drawableResId = R.drawable.bg1) { selectedColor = R.drawable.bg1 }
+            BackgroundCard(drawableResId = R.drawable.bg3) { selectedColor = R.drawable.bg3 }
+            BackgroundCard(drawableResId = R.drawable.red_bg) { selectedColor = R.drawable.red_bg }
+            BackgroundCard(drawableResId = R.drawable.circle_bg) { selectedColor = R.drawable.circle_bg }
         }
 
         Column(
@@ -161,21 +154,6 @@ fun CardDetails(
     }
 }
 
-@Composable
-fun BackgroundButton(drawableResId: Int, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(50.dp)
-            .background(Color.Transparent, CircleShape)
-            .clickable { onClick() },
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(id = drawableResId),
-            contentDescription = null,
-            modifier = Modifier.size(40.dp)
-        )
-    }
-}
+
 
 
