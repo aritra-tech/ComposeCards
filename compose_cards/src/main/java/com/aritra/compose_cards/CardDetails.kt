@@ -64,7 +64,7 @@ fun CardDetails(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BackgroundCard(drawableResId = R.drawable.bg1) { selectedColor = R.drawable.bg1 }
+            BackgroundCard(drawableResId = R.drawable.bg4) { selectedColor = R.drawable.bg4 }
             BackgroundCard(drawableResId = R.drawable.bg3) { selectedColor = R.drawable.bg3 }
             BackgroundCard(drawableResId = R.drawable.red_bg) { selectedColor = R.drawable.red_bg }
             BackgroundCard(drawableResId = R.drawable.circle_bg) { selectedColor = R.drawable.circle_bg }

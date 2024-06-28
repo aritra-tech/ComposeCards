@@ -95,25 +95,26 @@ fun CreditCard(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
-                .padding(10.dp)
+                .height(250.dp)
                 .graphicsLayer {
                     rotationY = rotation
                     cameraDistance = 8 * density
                 }
-
                 .clickable { backSwitch = !backSwitch },
         ) {
             Box(
                 modifier = Modifier.fillMaxSize()
-                    .clip(RoundedCornerShape(10.dp))
+                    .padding(10.dp)
                     .paint(
                         painter = painterResource(id = selectedBackground),
                         contentScale = ContentScale.Crop,
                     )
             ) {
                 AnimatedVisibility(visible = !backSwitch) {
-                    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                    ConstraintLayout(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(12.dp)
+                    ) {
                         val (cardImage, cardName, cardHolderName, number, cardExpiry, expiry) = createRefs()
 
                         AnimatedVisibility(visible = cardType != Card.None,
@@ -168,7 +169,7 @@ fun CreditCard(
                                 .graphicsLayer {
                                     alpha = animateFront
                                 }
-                                .padding(top = 10.dp, start = 16.dp, bottom = 16.dp)
+                                .padding(start = 16.dp, bottom = 16.dp)
                                 .constrainAs(cardName) {
                                     start.linkTo(parent.start)
                                     bottom.linkTo(parent.bottom)
@@ -198,7 +199,7 @@ fun CreditCard(
 
                         Text(
                             modifier = Modifier
-                                .padding(top = 10.dp, end = 16.dp, bottom = 16.dp)
+                                .padding(end = 16.dp, bottom = 16.dp)
                                 .graphicsLayer {
                                     alpha = animateFront
                                 }
