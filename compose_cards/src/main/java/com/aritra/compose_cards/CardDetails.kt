@@ -187,7 +187,3 @@ fun CardDetails(
         }
     }
 }
-
-
-
-
