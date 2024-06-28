@@ -1,12 +1,32 @@
+/**
+ * Copyright 2023 aritra-tech
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Please contact Aritra Das, if you need additional information or have any
+ * questions or directly reach out to me via mail: aritrarick2002@gmail.com
+ *
+ * @author Aritra Das
+ *
+ */
+
+
 package com.aritra.compose_cards.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,11 +50,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -42,7 +63,11 @@ import com.aritra.compose_cards.util.Card
 
 @Composable
 fun CreditCard(
-    cardNumber: String, holderName: String, expiryDate: String, cardCVV: String
+    cardNumber: String,
+    holderName: String,
+    expiryDate: String,
+    cardCVV: String,
+    selectedBackground: Int
 ) {
     var backSwitch by remember { mutableStateOf(false) }
     var cardType by remember { mutableStateOf(Card.None) }
@@ -89,35 +114,30 @@ fun CreditCard(
         else -> Card.None
     }
 
-    val animatedColor = animateColorAsState(
-        targetValue = when (cardType) {
-            Card.Visa -> Color(0xFF1C478B)
-            Card.Mastercard -> Color(0xFF3BB9A1)
-            Card.RuPay -> Color(0xFFB2B1FD)
-            Card.AmericanExpress -> Color(0xFFA671FC)
-            Card.Maestro -> Color(0xFF99BEF8)
-            Card.DinersClub -> Color(0xFFFC4444)
-            else -> MaterialTheme.colorScheme.onBackground
-        }, label = ""
-    )
-
     Box {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
-                .padding(10.dp)
+                .height(250.dp)
                 .graphicsLayer {
                     rotationY = rotation
                     cameraDistance = 8 * density
                 }
                 .clickable { backSwitch = !backSwitch },
-            shape = RoundedCornerShape(14.dp),
-            color = animatedColor.value,
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .padding(10.dp)
+                    .paint(
+                        painter = painterResource(id = selectedBackground),
+                        contentScale = ContentScale.Crop,
+                    )
+            ) {
                 AnimatedVisibility(visible = !backSwitch) {
-                    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                    ConstraintLayout(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(12.dp)
+                    ) {
                         val (cardImage, cardName, cardHolderName, number, cardExpiry, expiry) = createRefs()
 
                         AnimatedVisibility(visible = cardType != Card.None,
@@ -172,7 +192,7 @@ fun CreditCard(
                                 .graphicsLayer {
                                     alpha = animateFront
                                 }
-                                .padding(top = 10.dp, start = 16.dp, bottom = 16.dp)
+                                .padding(start = 16.dp, bottom = 16.dp)
                                 .constrainAs(cardName) {
                                     start.linkTo(parent.start)
                                     bottom.linkTo(parent.bottom)
@@ -202,7 +222,7 @@ fun CreditCard(
 
                         Text(
                             modifier = Modifier
-                                .padding(top = 10.dp, end = 16.dp, bottom = 16.dp)
+                                .padding(end = 16.dp, bottom = 16.dp)
                                 .graphicsLayer {
                                     alpha = animateFront
                                 }
@@ -260,10 +280,3 @@ fun CreditCard(
     }
 }
 
-@Preview
-@Composable
-fun PreviewPaymentCard() {
-    CreditCard(
-        "*****************", "Aritra Das", "0229", "699"
-    )
-}
