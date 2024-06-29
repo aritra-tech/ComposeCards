@@ -71,17 +71,28 @@ dependencies {
 
 ## Usage📓
 You can use the `CardDetails` by simply passing this to the screen you want to use. For example:
-```Kotlin
 
+```kotlin
 CardDetails(
-	creditCardNumber = "378282246310005",
-	creditCardHolderName = "John Doe",
-	creditCardExpiryDate = "02/29",
-	creditCardCVV = "101",
-	onSave = {}
+    creditCardNumber = "378282246310005",
+    creditCardHolderName = "John Doe",
+    creditCardExpiryDate = "02/29",
+    creditCardCVV = "101",
+    onSave = {}
 )
-
 ```
+
+### `CardDetails` Parameters
+
+| Parameter                       | Description                                                                                          
+|----------------------------------|-------------------------------------------------------------------------------------------------
+| `creditCardNumber`               | The card number input by the user.                           				             
+| `creditCardHolderName`           | The card holder's name is input by the user.                                                                   
+| `creditCardExpiryDate`           | The card's expiry date is input by the user.
+| `creditCardCVV`                  | The card's CVV input by the user. 
+| `onSave`                         | Callback function to handle save action. 
+
+
 ## Reporting Issues and Requesting Features✨
 If you encounter any issues or have feature requests, please create a new [issue](https://github.com/aritra-tech/ComposeCards/issues) in this repository.
 
