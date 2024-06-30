@@ -16,7 +16,7 @@
 <br>
 
 <p align="center">
-<img src="assets/Untitled.gif" width="280"/>
+<img src="assets/ComposeCards.gif" width="280"/>
 </p>
 
 
