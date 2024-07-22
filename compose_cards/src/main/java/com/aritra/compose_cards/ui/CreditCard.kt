@@ -54,10 +54,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.aritra.compose_cards.R
 import com.aritra.compose_cards.util.Card
 
 @Composable
@@ -167,7 +170,7 @@ fun CreditCard(
                             maxLines = 1,
                             color = Color.White,
                             fontSize = 25.sp,
-                            fontWeight = FontWeight.Normal
+                            fontFamily = FontFamily(Font(R.font.space_mono_regular))
                         )
 
                         Text(
@@ -182,8 +185,8 @@ fun CreditCard(
                                 },
                             text = "Card Holder",
                             color = Color.White,
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = 10.sp,
+                            fontFamily = FontFamily(Font(R.font.space_mono_bold))
                         )
 
                         Text(
@@ -199,8 +202,7 @@ fun CreditCard(
                             text = holderName,
                             color = Color.White,
                             fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold
-
+                            fontFamily = FontFamily(Font(R.font.space_mono_bold))
                         )
 
                         Text(
@@ -215,8 +217,8 @@ fun CreditCard(
                                 },
                             text = "Expiry Date",
                             color = Color.White,
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = 10.sp,
+                            fontFamily = FontFamily(Font(R.font.space_mono_bold))
                         )
 
                         Text(
@@ -232,7 +234,7 @@ fun CreditCard(
                             text = expiryDate.take(4).chunked(2).joinToString(" / "),
                             color = Color.White,
                             fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold
+                            fontFamily = FontFamily(Font(R.font.space_mono_bold))
                         )
                     }
                 }
@@ -252,14 +254,15 @@ fun CreditCard(
                     .background(Color.White), contentAlignment = Alignment.Center
             ) {
                 Text(
+                    modifier = Modifier
+                        .animateContentSize(TweenSpec(300))
+                        .padding(vertical = 4.dp, horizontal = 16.dp),
                     text = maskedCVV,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Normal,
                     fontSize = 15.sp,
                     color = Color.Black,
-                    modifier = Modifier
-                        .animateContentSize(TweenSpec(300))
-                        .padding(vertical = 4.dp, horizontal = 16.dp)
+                    fontFamily = FontFamily(Font(R.font.space_mono_bold))
                 )
             }
         }

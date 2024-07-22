@@ -164,7 +164,7 @@ fun CardDetails(
                     onTextChanged = {
                         cardCVV = it
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
                 )
             }
 
